@@ -118,6 +118,7 @@ class ViewController: UIViewController {
         
         addData(work)
         
+        
         let alert = UIAlertController(title: "Thông báo", message: "Đã thêm thành công \(String(describing: work.name))", preferredStyle: .alert)
         let done = UIAlertAction(title: "Xong", style: .default) { (_) in
             self.nameTF.text = ""
@@ -126,12 +127,20 @@ class ViewController: UIViewController {
         }
         alert.addAction(done)
         present(alert, animated: true, completion: nil)
+        
+        let results = realm.objects(Work.self)
+        works = Array(results)
+        self.tableView.reloadData()
+        
+        
     }
     
     func addData(_ work: Work){
         try! realm.write {
             realm.add(work)
+        
         }
+        
     }
     
     func setView() {
